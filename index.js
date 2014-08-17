@@ -6,19 +6,19 @@ module.exports = Reconnect
 
 function Reconnect(r, opts) {
 	var self = this
-	if (!(this instanceof Reconnect)) return new Reconnect(r, opts)		
+	if (!(this instanceof Reconnect)) return new Reconnect(r, opts)
 
 	this.backoff = (backoff[opts.type] || backoff.fibonacci)({
-	    randomisationFactor: 0,
-	    initialDelay: opts.initialDelay || 10,
-	    maxDelay: opts.maxDelay || 1000	    
+		randomisationFactor: 0,
+		initialDelay: opts.initialDelay || 10,
+		maxDelay: opts.maxDelay || 1000	    
 	})
 
 	opts.failAfter && this.backoff.failAfter(opts.failAfter)
 
-  this.conn = null
-  this.reconnect = true
-		
+	this.conn = null
+	this.reconnect = true
+
 	this.backoff.on('ready', function(number, delay) {
 		if (!self.reconnect) return 
 		self.emit('reconnect', number, delay)	
@@ -27,7 +27,7 @@ function Reconnect(r, opts) {
 
 	this.backoff.on('backoff', function (number, delay) {
 		self.emit('backoff', number, delay)
-   })	
+	})	
 
 	this.backoff.on('fail', function(){
 		self.reconnect = false
@@ -35,21 +35,21 @@ function Reconnect(r, opts) {
 		self.emit('fail')		
 	})
 
-  this.on('_cleanup', function(err){
-  	this.conn && this.conn.removeAllListeners()
-  	this.emit('disconnect', err)
-  	this.backoff.backoff() 	
-  })
+	this.on('_cleanup', function(err){
+		this.conn && this.conn.removeAllListeners()
+		this.emit('disconnect', err)
+		this.backoff.backoff() 	
+	})
 
 	function _connect() {
 		r.connect(opts, function(err, conn) {
-	    if (err) return self.emit('_cleanup', err)    
+		  if (err) return self.emit('_cleanup', err)    
 		  conn.on('error', self.emit.bind(self, '_cleanup', err))
 		  conn.on('close', self.emit.bind(self, '_cleanup'))		  
 		  self.conn = conn
-	    self.emit('connect', conn)
-	    self.backoff.reset()
-	    self.cb && self.cb(conn)
+		  self.emit('connect', conn)
+		  self.backoff.reset()
+		  self.cb && self.cb(conn)
 		})
 	}	
 }
