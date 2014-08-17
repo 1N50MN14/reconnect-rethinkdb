@@ -1,0 +1,27 @@
+{
+  "name": "reconnect-rethinkdb",
+  "version": "0.0.1",
+  "homepage": "https://github.com/1N50MN14/reconnect-rethinkdb",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/1N50MN14/reconnect-rethinkdb.git"
+  },
+  "devDependencies": {
+    "rethinkdb": "1.13.0-3",
+    "tap": "~0.4.0"
+  },
+  "author": "ins0mnia <ayman.mackouly@gmail.com> (http://github.com/1N50MN14)",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "description": "Fibonacci and exponential backoff reconnection for rethinkdb.",  
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {    
+    "inherits": "1.0.0",
+    "backoff": "~2.4.0"
+
+  },
+  "keywords": ["rethinkdb", "reconnect", "exponential", "backoff"]
+}
