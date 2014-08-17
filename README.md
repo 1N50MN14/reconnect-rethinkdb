@@ -1,6 +1,6 @@
 # reconnect-rethinkdb
 
-Fibonacci and exponential backoff reconnection for [rethinkdb](http://www.rethinkdb.com/) when it goes down.
+Fibonacci and exponential backoff reconnection for [rethinkdb](http://www.rethinkdb.com/).
 
 ## Usage
 
